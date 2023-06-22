@@ -17,14 +17,8 @@ public class LecturerService {
     }
 
     public List<Lecturer> getAllLecturers() {
-        List<Lecturer> lecturers = lecturerRepository.findAll();
-        lecturers.sort((o1, o2) -> {
-            if (o1.getFirstName() == null || o2.getFirstName() == null) {
-                return 0;
-            }
-            return o1.getFirstName().compareTo(o2.getFirstName());
-        });
-        return lecturers;
+
+        return lecturerRepository.findAll();
     }
 
     public List<Lecturer> getLecturerByDepartmentId(Long departmentId) {

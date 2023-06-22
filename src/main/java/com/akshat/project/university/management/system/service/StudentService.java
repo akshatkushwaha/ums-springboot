@@ -17,14 +17,8 @@ public class StudentService {
     }
 
     public List<Student> getAllStudents() {
-        List<Student> students = studentRepository.findAll();
-        students.sort((o1, o2) -> {
-            if (o1.getFirstName() == null || o2.getFirstName() == null) {
-                return 0;
-            }
-            return o1.getFirstName().compareTo(o2.getFirstName());
-        });
-        return students;
+
+        return studentRepository.findAll();
     }
 
     public Student getStudentById(Long id) {

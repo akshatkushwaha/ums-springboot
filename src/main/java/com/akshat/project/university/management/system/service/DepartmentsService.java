@@ -17,14 +17,7 @@ public class DepartmentsService {
     }
 
     public List<Department> getAllDepartments() {
-        List<Department> departments = departmentRepository.findAll();
-        departments.sort((o1, o2) -> {
-            if (o1.getName() == null || o2.getName() == null) {
-                return 0;
-            }
-            return o1.getName().compareTo(o2.getName());
-        });
-        return departments;
+        return departmentRepository.findAll();
     }
 
     public Department createDepartment(Department department) {
