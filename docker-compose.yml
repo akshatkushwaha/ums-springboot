@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ums
+    ports:
+      - 5432:5432
+    volumes:
+      - type: volume
+        source: postgres
+        target: /var/lib/postgresql/data
+
+#  web:
+#    build: .
+#    container_name: ums
+#    ports:
+#      - '8080:8080'
+#    volumes:
+#      - type: bind
+#        source: ./src
+#        target: /web/src
+#    depends_on:
+#      - db
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#      - SPRING_JPA_SHOW_SQL=true
+#      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+#
+volumes:
+    postgres:
