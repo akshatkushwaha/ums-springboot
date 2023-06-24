@@ -3,17 +3,16 @@ package com.akshat.project.university.management.system.model;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Student extends Person {
-    private String rollNumber;
-    private Long departmentId;
+public class StudentCreditMapping {
+    private Long studentId;
+    private Long subjectId;
+    private Integer credits;
+    private Integer semester;
+    private Boolean isCompleted;
 }

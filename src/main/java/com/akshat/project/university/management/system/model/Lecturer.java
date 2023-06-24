@@ -14,20 +14,4 @@ import lombok.NoArgsConstructor;
 public class Lecturer extends Person{
     private String employeeId;
     private Long departmentId;
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
 }

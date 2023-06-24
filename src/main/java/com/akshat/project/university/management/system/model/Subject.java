@@ -18,10 +18,9 @@ public class Subject {
     @GeneratedValue(generator = "subject_id", strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String abbreviation;
     private Long departmentId;
     @Column(unique = true)
     private String subjectCode;
+    private Integer credits;
     private String description;
-
 }
