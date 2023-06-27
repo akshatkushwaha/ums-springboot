@@ -1,11 +1,10 @@
 package com.akshat.project.university.management.system.controller;
 
-import com.akshat.project.university.management.system.model.Student;
 import com.akshat.project.university.management.system.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -19,28 +18,4 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping
-    public List<Student> getStudent() {
-        return studentService.getAllStudents();
-    }
-
-    @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable(value = "id") Long id) {
-        return studentService.getStudentById(id);
-    }
-
-    @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.createStudent(student);
-    }
-
-    @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable(value = "id") Long id, @RequestBody Student studentDetails) {
-        return studentService.updateStudent(id, studentDetails);
-    }
-
-    @DeleteMapping("/{id}")
-    public Student deleteStudent(@PathVariable(value = "id") Long id) {
-        return studentService.deleteStudent(id);
-    }
 }

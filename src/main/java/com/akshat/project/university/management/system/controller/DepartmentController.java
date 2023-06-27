@@ -3,9 +3,8 @@ package com.akshat.project.university.management.system.controller;
 import com.akshat.project.university.management.system.model.Department;
 import com.akshat.project.university.management.system.service.DepartmentsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -18,28 +17,9 @@ public class DepartmentController {
         this.departmentsService = departmentsService;
     }
 
-    @GetMapping
-    public List<Department> getDepartment() {
-        return departmentsService.getAllDepartments();
-    }
-
-    @GetMapping("/{id}")
-    public Department getDepartmentById(@PathVariable(value = "id") Long id) {
-        return departmentsService.getDepartmentById(id);
-    }
-
     @PostMapping
-    public Department createDepartment(@RequestBody Department department) {
-        return departmentsService.createDepartment(department);
+    public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
+        return ResponseEntity.ok(departmentsService.createDepartment(department));
     }
 
-    @PutMapping("/{id}")
-    public Department updateDepartment(@PathVariable(value = "id") Long id, @RequestBody Department departmentDetails) {
-        return departmentsService.updateDepartment(id, departmentDetails);
-    }
-
-    @DeleteMapping("/{id}")
-    public Department deleteDepartment(@PathVariable(value = "id") Long id) {
-        return departmentsService.deleteDepartment(id);
-    }
 }
