@@ -1,7 +1,10 @@
 package com.akshat.project.university.management.system.jwt.auth;
 
 import com.akshat.project.university.management.system.jwt.user.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Data
 @Getter

@@ -2,27 +2,24 @@ package com.akshat.project.university.management.system.service;
 
 import com.akshat.project.university.management.system.model.Lecturer;
 import com.akshat.project.university.management.system.repository.LecturerRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class LecturerService {
     @Autowired
     private final LecturerRepository lecturerRepository;
 
-    public LecturerService(LecturerRepository lecturerRepository) {
-        this.lecturerRepository = lecturerRepository;
-    }
-
     public List<Lecturer> getAllLecturers() {
-
         return lecturerRepository.findAll();
     }
 
-    public List<Lecturer> getLecturerByDepartmentId(Long departmentId) {
-        return lecturerRepository.findByDepartmentId(departmentId);
+    public List<Lecturer> getAllLecturerByDepartmentId(Long departmentId) {
+        return lecturerRepository.findAllByDepartmentId(departmentId);
     }
 
     public Lecturer getLecturerById(Long id) {

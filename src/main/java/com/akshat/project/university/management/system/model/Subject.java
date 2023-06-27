@@ -17,6 +17,7 @@ public class Subject {
             allocationSize = 1)
     @GeneratedValue(generator = "subject_id", strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String name;
     private Long departmentId;
     @Column(unique = true)

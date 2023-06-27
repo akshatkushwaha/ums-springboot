@@ -2,23 +2,24 @@ package com.akshat.project.university.management.system.service;
 
 import com.akshat.project.university.management.system.model.Student;
 import com.akshat.project.university.management.system.repository.StudentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class StudentService {
     @Autowired
     private final StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
     }
 
-    public List<Student> getAllStudents() {
-
-        return studentRepository.findAll();
+    public List<Student> getAllStudentsByDepartmentId(Long departmentId) {
+        return studentRepository.findAllByDepartmentId(departmentId);
     }
 
     public Student getStudentById(Long id) {
