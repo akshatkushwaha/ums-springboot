@@ -34,6 +34,10 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
+        var userExists = userRepository.findByUsername(user.getUsername())
+                .isPresent();
+        if (userExists)
+            throw new RuntimeException("User already exists");
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
