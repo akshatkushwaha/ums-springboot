@@ -1,9 +1,6 @@
 package com.akshat.project.university.management.system.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +11,11 @@ import lombok.NoArgsConstructor;
 @Entity
 public class StudentCreditMapping {
     @Id
+    @SequenceGenerator(
+            name = "student_credit_mapping_sequence",
+            sequenceName = "student_credit_mapping_sequence",
+            allocationSize = 1
+    )
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long studentId;

@@ -14,7 +14,6 @@ import java.util.List;
 public class SubjectService {
     @Autowired
     private final SubjectRepository subjectRepository;
-    @Autowired
     private final StudentCreditMappingRepository studentCreditMappingRepository;
 
     public Iterable<Subject> getAllSubjects() {

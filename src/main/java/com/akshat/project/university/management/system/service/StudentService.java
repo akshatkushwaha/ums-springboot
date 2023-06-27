@@ -14,7 +14,6 @@ import java.util.List;
 public class StudentService {
     @Autowired
     private final StudentRepository studentRepository;
-    @Autowired
     private final StudentCreditMappingRepository studentCreditMappingRepository;
 
     public List<Student> getAllStudents() {
