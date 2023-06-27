@@ -32,7 +32,9 @@ public class DepartmentsService {
     public Department createDepartment(Department department) {
         return departmentRepository.save(department);
     }
-    public void deleteDepartment(Long id) {
+    public Department deleteDepartment(Long id) {
+        Department department = departmentRepository.findById(id).orElseThrow();
         departmentRepository.deleteById(id);
+        return department;
     }
 }

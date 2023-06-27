@@ -1,6 +1,7 @@
 package com.akshat.project.university.management.system.service;
 
 import com.akshat.project.university.management.system.model.Student;
+import com.akshat.project.university.management.system.repository.StudentCreditMappingRepository;
 import com.akshat.project.university.management.system.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import java.util.List;
 public class StudentService {
     @Autowired
     private final StudentRepository studentRepository;
+    @Autowired
+    private final StudentCreditMappingRepository studentCreditMappingRepository;
 
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
@@ -20,6 +23,11 @@ public class StudentService {
 
     public List<Student> getAllStudentsByDepartmentId(Long departmentId) {
         return studentRepository.findAllByDepartmentId(departmentId);
+    }
+
+    public Iterable<Student> getAllStudentsBySubjectId(Long subjectId) {
+        List<Long> studentIds = studentCreditMappingRepository.findAllBySubjectId(subjectId);
+        return studentRepository.findAllById(studentIds);
     }
 
     public Student getStudentById(Long id) {
@@ -54,5 +62,4 @@ public class StudentService {
         studentRepository.delete(student);
         return student;
     }
-
 }

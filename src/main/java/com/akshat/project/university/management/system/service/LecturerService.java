@@ -18,7 +18,7 @@ public class LecturerService {
         return lecturerRepository.findAll();
     }
 
-    public List<Lecturer> getAllLecturerByDepartmentId(Long departmentId) {
+    public List<Lecturer> getAllLecturersByDepartmentId(Long departmentId) {
         return lecturerRepository.findAllByDepartmentId(departmentId);
     }
 
