@@ -5,16 +5,16 @@
 FROM openjdk:17-jdk-alpine
 
 # set working directory
-WORKDIR /web
+WORKDIR /server
 
 # copy build.gradle and settings.gradle
-COPY build.gradle settings.gradle gradlew /web/
+COPY build.gradle settings.gradle gradlew /server/
 
 # copy gradle folder
-COPY gradle /web/gradle
+COPY gradle /server/gradle
 
 # copy src folder
-COPY src /web/src
+COPY src /server/src
 
 # build
 RUN ./gradlew build -x test
