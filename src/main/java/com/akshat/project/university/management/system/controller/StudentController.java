@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/student")
@@ -17,7 +17,16 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping
-    public ResponseEntity<Iterable<Student>> getAllStudents() {
+    public ResponseEntity<Iterable<Student>> getAllStudents(
+            @RequestParam(name = "departmentId", required = false) Long departmentId,
+            @RequestParam(name = "subjectId", required = false) Long subjectId
+    ) {
+        if (departmentId != null) {
+            return ResponseEntity.ok(studentService.getAllStudentsByDepartmentId(departmentId));
+        }
+        if (subjectId != null) {
+            return ResponseEntity.ok(studentService.getAllStudentsBySubjectId(subjectId));
+        }
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
@@ -26,23 +35,24 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
-    @GetMapping("/department/{id}")
-    public ResponseEntity<Iterable<Student>> getAllStudentsByDepartmentId(@PathVariable("id") Long departmentId) {
-        return ResponseEntity.ok(studentService.getAllStudentsByDepartmentId(departmentId));
-    }
-
-    @GetMapping("/subject/{id}")
-    public ResponseEntity<Iterable<Student>> getAllStudentsBySubjectId(@PathVariable("id") Long subjectId){
-        return ResponseEntity.ok(studentService.getAllStudentsBySubjectId(subjectId));
-    }
+//    @GetMapping("/department/{id}")
+//    public ResponseEntity<Iterable<Student>> getAllStudentsByDepartmentId(@PathVariable("id") Long departmentId) {
+//        return ResponseEntity.ok(studentService.getAllStudentsByDepartmentId(departmentId));
+//    }
+//
+//    @GetMapping("/subject/{id}")
+//    public ResponseEntity<Iterable<Student>> getAllStudentsBySubjectId(@PathVariable("id") Long subjectId){
+//        return ResponseEntity.ok(studentService.getAllStudentsBySubjectId(subjectId));
+//    }
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(Student student) {
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         return ResponseEntity.ok(studentService.createStudent(student));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
+    @PutMapping
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
+        Long id = student.getId();
         return ResponseEntity.ok(studentService.updateStudent(id, student));
     }
 

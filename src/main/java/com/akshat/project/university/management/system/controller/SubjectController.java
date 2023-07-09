@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/subject")
@@ -16,7 +16,16 @@ public class SubjectController {
     public final SubjectService subjectService;
 
     @GetMapping
-    public ResponseEntity<Iterable<Subject>> getAllSubjects() {
+    public ResponseEntity<Iterable<Subject>> getAllSubjects(
+            @RequestParam(name = "departmentId", required = false) Long departmentId,
+            @RequestParam(name = "studentId", required = false) Long studentId
+    ) {
+        if (studentId != null) {
+            return ResponseEntity.ok(subjectService.getAllSubjectsByStudentId(studentId));
+        }
+        if (departmentId != null) {
+            return ResponseEntity.ok(subjectService.getAllSubjectsByDepartmentId(departmentId));
+        }
         return ResponseEntity.ok(subjectService.getAllSubjects());
     }
 
@@ -25,23 +34,24 @@ public class SubjectController {
         return ResponseEntity.ok(subjectService.getSubjectById(id));
     }
 
-    @GetMapping("/department/{id}")
-    public ResponseEntity<Iterable<Subject>> getAllSubjectsByDepartmentId(@PathVariable("id") Long departmentId) {
-        return ResponseEntity.ok(subjectService.getAllSubjectsByDepartmentId(departmentId));
-    }
-
-    @GetMapping("/student/{id}")
-    public ResponseEntity<Iterable<Subject>> getAllSubjectsByStudentId(@PathVariable("id") Long studentId){
-        return ResponseEntity.ok(subjectService.getAllSubjectsByStudentId(studentId));
-    }
+//    @GetMapping("/department/{id}")
+//    public ResponseEntity<Iterable<Subject>> getAllSubjectsByDepartmentId(@PathVariable("id") Long departmentId) {
+//        return ResponseEntity.ok(subjectService.getAllSubjectsByDepartmentId(departmentId));
+//    }
+//
+//    @GetMapping("/student/{id}")
+//    public ResponseEntity<Iterable<Subject>> getAllSubjectsByStudentId(@PathVariable("id") Long studentId) {
+//        return ResponseEntity.ok(subjectService.getAllSubjectsByStudentId(studentId));
+//    }
 
     @PostMapping
-    public ResponseEntity<Subject> createSubject(Subject subject) {
+    public ResponseEntity<Subject> createSubject(@RequestBody Subject subject) {
         return ResponseEntity.ok(subjectService.createSubject(subject));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Subject> updateSubject(@PathVariable("id") Long id, @RequestBody Subject subject) {
+    @PutMapping
+    public ResponseEntity<Subject> updateSubject( @RequestBody Subject subject) {
+        Long id = subject.getId();
         return ResponseEntity.ok(subjectService.updateSubject(id, subject));
     }
 

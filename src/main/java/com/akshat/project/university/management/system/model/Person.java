@@ -1,5 +1,6 @@
 package com.akshat.project.university.management.system.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,7 @@ public abstract class Person {
     private String phoneNumber;
     private String gender;
     private Long addressId;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
-    private String profilePictureURL;
+    private Long profilePictureId;
 }

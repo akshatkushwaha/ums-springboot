@@ -23,5 +23,6 @@ public class Subject {
     @Column(unique = true)
     private String subjectCode;
     private Integer credits;
+    @Column(columnDefinition = "TEXT")
     private String description;
 }

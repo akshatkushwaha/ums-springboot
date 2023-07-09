@@ -42,7 +42,7 @@ public class LecturerService {
         lecturer.setGender(lecturerDetails.getGender());
         lecturer.setAddressId(lecturerDetails.getAddressId());
         lecturer.setDateOfBirth(lecturerDetails.getDateOfBirth());
-        lecturer.setProfilePictureURL(lecturerDetails.getProfilePictureURL());
+        lecturer.setProfilePictureId(lecturerDetails.getProfilePictureId());
         lecturer.setDepartmentId(lecturerDetails.getDepartmentId());
         lecturer.setEmployeeId(lecturerDetails.getEmployeeId());
         return lecturerRepository.save(lecturer);

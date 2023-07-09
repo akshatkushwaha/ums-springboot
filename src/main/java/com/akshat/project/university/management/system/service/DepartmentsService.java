@@ -26,7 +26,7 @@ public class DepartmentsService {
         department.setAbbreviation(updatedDepartment.getAbbreviation());
         department.setDescription(updatedDepartment.getDescription());
         department.setHodId(updatedDepartment.getHodId());
-        department.setImageURL(updatedDepartment.getImageURL());
+        department.setImageId(updatedDepartment.getImageId());
         return departmentRepository.save(department);
     }
     public Department createDepartment(Department department) {

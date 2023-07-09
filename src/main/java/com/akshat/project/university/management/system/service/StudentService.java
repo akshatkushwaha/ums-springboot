@@ -49,7 +49,7 @@ public class StudentService {
         student.setGender(studentDetails.getGender());
         student.setAddressId(studentDetails.getAddressId());
         student.setDateOfBirth(studentDetails.getDateOfBirth());
-        student.setProfilePictureURL(studentDetails.getProfilePictureURL());
+        student.setProfilePictureId(studentDetails.getProfilePictureId());
         student.setDepartmentId(studentDetails.getDepartmentId());
         student.setRollNumber(studentDetails.getRollNumber());
         return studentRepository.save(student);
