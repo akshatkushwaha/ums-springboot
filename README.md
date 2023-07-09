@@ -21,3 +21,5 @@ PostgreSQL Database
 ### Student Credit Mapping
 | id | studentId | subjectId | credits | semester | isCompleted |
 |----|-----------|-----------|---------|----------|-------------|
+
+## API Endpoints
