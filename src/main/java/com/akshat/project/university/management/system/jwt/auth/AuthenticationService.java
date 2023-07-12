@@ -1,5 +1,6 @@
 package com.akshat.project.university.management.system.jwt.auth;
 
+import com.akshat.project.university.management.system.error.ApiRequestException;
 import com.akshat.project.university.management.system.jwt.config.JwtService;
 import com.akshat.project.university.management.system.jwt.token.Token;
 import com.akshat.project.university.management.system.jwt.token.TokenRepository;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +39,7 @@ public class AuthenticationService {
         var userExists = userRepository.findByUsername(user.getUsername())
                 .isPresent();
         if (userExists)
-            throw new RuntimeException("User already exists");
+            throw new ApiRequestException("User already exists with username " + user.getUsername(), HttpStatus.BAD_REQUEST);
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -56,7 +58,9 @@ public class AuthenticationService {
                 )
         );
         var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow();
+                .orElseThrow(
+                        () -> new ApiRequestException("User with username " + request.getUsername() + " doest not exist", HttpStatus.NOT_FOUND)
+                );
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);

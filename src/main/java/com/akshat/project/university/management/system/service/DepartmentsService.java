@@ -1,9 +1,12 @@
 package com.akshat.project.university.management.system.service;
 
+import com.akshat.project.university.management.system.error.ApiException;
+import com.akshat.project.university.management.system.error.ApiRequestException;
 import com.akshat.project.university.management.system.model.Department;
 import com.akshat.project.university.management.system.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +18,19 @@ public class DepartmentsService {
     private final DepartmentRepository departmentRepository;
 
     public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
+        try {
+            return departmentRepository.findAll();
+        } catch (Exception e) {
+            throw new ApiRequestException("Could not fetch departments from the database", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
     public Department getDepartmentById(Long id) {
-        return departmentRepository.findById(id).orElseThrow();
+        return departmentRepository.findById(id).orElseThrow(
+                () -> new ApiRequestException("Department with id: " + id + " does not exist", HttpStatus.NOT_FOUND)
+        );
     }
+
     public Department updateDepartment(Long id, Department updatedDepartment) {
         Department department = departmentRepository.findById(id).orElseThrow();
         department.setName(updatedDepartment.getName());
@@ -27,14 +38,33 @@ public class DepartmentsService {
         department.setDescription(updatedDepartment.getDescription());
         department.setHodId(updatedDepartment.getHodId());
         department.setImageId(updatedDepartment.getImageId());
-        return departmentRepository.save(department);
+        try {
+            return departmentRepository.save(department);
+        } catch (Exception e) {
+            throw new ApiRequestException("Could not update department with id: " + id, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
     public Department createDepartment(Department department) {
-        return departmentRepository.save(department);
+        if(departmentRepository.existsByName(department.getName())){
+            throw new ApiRequestException("Department with name: " + department.getName() + " already exist", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            return departmentRepository.save(department);
+        } catch (Exception e) {
+            throw new ApiRequestException("Could not create department", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
     public Department deleteDepartment(Long id) {
-        Department department = departmentRepository.findById(id).orElseThrow();
-        departmentRepository.deleteById(id);
+        Department department = departmentRepository.findById(id).orElseThrow(
+                () -> new ApiRequestException("Department with id: " + id + " does not exist", HttpStatus.NOT_FOUND)
+        );
+        try {
+            departmentRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ApiRequestException("Could not delete department with id: " + id, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return department;
     }
 }
