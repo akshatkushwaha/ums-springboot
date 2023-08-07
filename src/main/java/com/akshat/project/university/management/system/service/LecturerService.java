@@ -54,7 +54,7 @@ public class LecturerService {
         lecturer.setGender(lecturerDetails.getGender());
         lecturer.setAddressId(lecturerDetails.getAddressId());
         lecturer.setDateOfBirth(lecturerDetails.getDateOfBirth());
-        lecturer.setProfilePictureId(lecturerDetails.getProfilePictureId());
+        lecturer.setProfilePicturePath(lecturerDetails.getProfilePicturePath());
         lecturer.setDepartmentId(lecturerDetails.getDepartmentId());
         lecturer.setEmployeeId(lecturerDetails.getEmployeeId());
         try {

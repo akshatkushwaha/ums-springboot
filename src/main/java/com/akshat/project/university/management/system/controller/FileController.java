@@ -3,7 +3,6 @@ package com.akshat.project.university.management.system.controller;
 import com.akshat.project.university.management.system.model.File;
 import com.akshat.project.university.management.system.service.FileService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +15,35 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/v1/file")
 public class FileController {
-    @Autowired
     private final FileService fileService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<byte[]> getFileById(@PathVariable("id") Long id){
-        File file = fileService.getFileById(id);
-        return ResponseEntity.ok().contentType(MediaType.valueOf(file.getContentType())).body(file.getData());
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<File> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        return ResponseEntity.ok(fileService.uploadFile(multipartFile));
     }
 
-    @PostMapping
-    public ResponseEntity<File> createFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return ResponseEntity.ok(fileService.createFile(file));
+    @GetMapping
+    public ResponseEntity<java.util.List<File>> getAllFiles() {
+        return ResponseEntity.ok(fileService.getAllFiles());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<File> getFileById(@PathVariable Long id) {
+        return ResponseEntity.ok(fileService.getFileById(id));
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<File> getFileByName(@PathVariable String name) {
+        return ResponseEntity.ok(fileService.getFileByName(name));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<File> deleteFile(@PathVariable("id") Long id){
-        return ResponseEntity.ok(fileService.deteleFile(id));
+    public ResponseEntity<File> deleteFile(@PathVariable Long id) {
+        return ResponseEntity.ok(fileService.deleteFile(id));
+    }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<java.io.File> downloadFile(@PathVariable Long id) {
+        return ResponseEntity.ok(fileService.downloadFile(id));
     }
 }

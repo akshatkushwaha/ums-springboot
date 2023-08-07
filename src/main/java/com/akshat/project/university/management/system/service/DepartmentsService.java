@@ -37,7 +37,7 @@ public class DepartmentsService {
         department.setAbbreviation(updatedDepartment.getAbbreviation());
         department.setDescription(updatedDepartment.getDescription());
         department.setHodId(updatedDepartment.getHodId());
-        department.setImageId(updatedDepartment.getImageId());
+        department.setImagePath(updatedDepartment.getImagePath());
         try {
             return departmentRepository.save(department);
         } catch (Exception e) {

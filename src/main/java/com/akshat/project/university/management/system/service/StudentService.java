@@ -65,7 +65,7 @@ public class StudentService {
         student.setGender(studentDetails.getGender());
         student.setAddressId(studentDetails.getAddressId());
         student.setDateOfBirth(studentDetails.getDateOfBirth());
-        student.setProfilePictureId(studentDetails.getProfilePictureId());
+        student.setProfilePicturePath(studentDetails.getProfilePicturePath());
         student.setDepartmentId(studentDetails.getDepartmentId());
         student.setRollNumber(studentDetails.getRollNumber());
         try {

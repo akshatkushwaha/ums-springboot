@@ -25,5 +25,5 @@ public class Department {
     private Long hodId;
     @Column(columnDefinition = "TEXT")
     private String description;
-    private Long imageId;
+    private String imagePath;
 }

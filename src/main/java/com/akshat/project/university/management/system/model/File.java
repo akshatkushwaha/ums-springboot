@@ -19,7 +19,9 @@ public class File {
     private Long id;
     private String name;
     private String contentType;
-    private Long size;
-    @Lob
-    private byte[] data;
+    private String path;
+
+    public void setFile(byte[] bytes) {
+
+    }
 }
