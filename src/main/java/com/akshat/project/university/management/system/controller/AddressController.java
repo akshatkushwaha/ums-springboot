@@ -4,7 +4,6 @@ package com.akshat.project.university.management.system.controller;
 import com.akshat.project.university.management.system.model.Address;
 import com.akshat.project.university.management.system.service.AddressService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/address")
 public class AddressController {
-    @Autowired
     private final AddressService addressService;
 
 //    @GetMapping

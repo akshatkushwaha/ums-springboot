@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+    postgres:
+        image: postgres:alpine
+        container_name: postgres
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: ums
+        ports:
+            - "5432:5432"
+        volumes:
+            - data:/var/lib/postgresql/data
+
+#    dynamodb:
+#        image: amazon/dynamodb-local
+#        container_name: dynamodb
+#        restart: always
+#        ports:
+#            - "8000:8000"
+#        volumes:
+#            - data:/home/dynamodblocal/data
+
+    springboot:
+        container_name: springboot
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: always
+        depends_on:
+            - postgres
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./src/main/resources/uploads:/usr/server/src/main/resources/uploads
+        environment:
+          - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ums
+          - SPRING_DATASOURCE_USERNAME=postgres
+          - SPRING_DATASOURCE_PASSWORD=postgres
+          - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+          - SPRING_JPA_SHOW_SQL=true
+          - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+          - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+
+volumes:
+    data:

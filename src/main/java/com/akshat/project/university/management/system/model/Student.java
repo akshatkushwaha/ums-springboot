@@ -13,5 +13,4 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Student extends Person {
     private String rollNumber;
-    private Long departmentId;
 }

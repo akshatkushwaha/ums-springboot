@@ -31,4 +31,6 @@ public abstract class Person {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     private String profilePicturePath;
+    private Long profilePictureId;
+    private Long departmentId;
 }

@@ -4,15 +4,12 @@ import com.akshat.project.university.management.system.error.ApiRequestException
 import com.akshat.project.university.management.system.model.Address;
 import com.akshat.project.university.management.system.repository.AddressRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
 public class AddressService {
-    @Autowired
     private final AddressRepository addressRepository;
 
     public Address getAddressById(Long id) {

@@ -1,7 +1,9 @@
 package com.akshat.project.university.management.system.error;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class ApiRequestException extends RuntimeException {
     private final HttpStatus httpStatus;
     public ApiRequestException(String message, HttpStatus httpStatus) {
@@ -11,8 +13,5 @@ public class ApiRequestException extends RuntimeException {
     public ApiRequestException(String message, Throwable cause, HttpStatus httpStatus) {
         super(message, cause);
         this.httpStatus = httpStatus;
-    }
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
     }
 }

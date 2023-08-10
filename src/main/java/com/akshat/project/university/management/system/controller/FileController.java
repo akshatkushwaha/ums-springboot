@@ -22,6 +22,30 @@ public class FileController {
         return ResponseEntity.ok(fileService.uploadFile(multipartFile));
     }
 
+//    @GetMapping("/download/{name}")
+//    public ResponseEntity<byte[]> downloadFile(@PathVariable String name) {
+//        return ResponseEntity
+//                .ok()
+//                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                .body(fileService.downloadFile(name));
+//    }
+//
+//    @GetMapping("/{path}")
+//    public ResponseEntity<byte[]> downloadFileByPath(@PathVariable String path) {
+//        return ResponseEntity
+//                .ok()
+//                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                .body(fileService.downloadFileByPath(path));
+//    }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<byte[]> downloadFileById(@PathVariable Long id) {
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(fileService.downloadFileById(id));
+    }
+
     @GetMapping
     public ResponseEntity<java.util.List<File>> getAllFiles() {
         return ResponseEntity.ok(fileService.getAllFiles());
@@ -32,18 +56,8 @@ public class FileController {
         return ResponseEntity.ok(fileService.getFileById(id));
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<File> getFileByName(@PathVariable String name) {
-        return ResponseEntity.ok(fileService.getFileByName(name));
-    }
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<File> deleteFile(@PathVariable Long id) {
-        return ResponseEntity.ok(fileService.deleteFile(id));
-    }
-
-    @GetMapping("/download/{id}")
-    public ResponseEntity<java.io.File> downloadFile(@PathVariable Long id) {
-        return ResponseEntity.ok(fileService.downloadFile(id));
+    public ResponseEntity<File> deleteFileById(@PathVariable Long id) {
+        return ResponseEntity.ok(fileService.deleteFileById(id));
     }
 }

@@ -5,7 +5,6 @@ import com.akshat.project.university.management.system.model.Subject;
 import com.akshat.project.university.management.system.repository.StudentCreditMappingRepository;
 import com.akshat.project.university.management.system.repository.SubjectRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class SubjectService {
-    @Autowired
     private final SubjectRepository subjectRepository;
     private final StudentCreditMappingRepository studentCreditMappingRepository;
 

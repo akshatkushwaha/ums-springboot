@@ -5,7 +5,6 @@ import com.akshat.project.university.management.system.model.Student;
 import com.akshat.project.university.management.system.repository.StudentCreditMappingRepository;
 import com.akshat.project.university.management.system.repository.StudentRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class StudentService {
-    @Autowired
     private final StudentRepository studentRepository;
     private final StudentCreditMappingRepository studentCreditMappingRepository;
 
@@ -66,6 +64,7 @@ public class StudentService {
         student.setAddressId(studentDetails.getAddressId());
         student.setDateOfBirth(studentDetails.getDateOfBirth());
         student.setProfilePicturePath(studentDetails.getProfilePicturePath());
+        student.setProfilePictureId(studentDetails.getProfilePictureId());
         student.setDepartmentId(studentDetails.getDepartmentId());
         student.setRollNumber(studentDetails.getRollNumber());
         try {

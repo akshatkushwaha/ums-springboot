@@ -1,11 +1,9 @@
 package com.akshat.project.university.management.system.service;
 
-import com.akshat.project.university.management.system.error.ApiException;
 import com.akshat.project.university.management.system.error.ApiRequestException;
 import com.akshat.project.university.management.system.model.Department;
 import com.akshat.project.university.management.system.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class DepartmentsService {
-    @Autowired
     private final DepartmentRepository departmentRepository;
 
     public List<Department> getAllDepartments() {
@@ -38,6 +35,7 @@ public class DepartmentsService {
         department.setDescription(updatedDepartment.getDescription());
         department.setHodId(updatedDepartment.getHodId());
         department.setImagePath(updatedDepartment.getImagePath());
+        department.setImageId(updatedDepartment.getImageId());
         try {
             return departmentRepository.save(department);
         } catch (Exception e) {

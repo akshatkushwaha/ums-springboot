@@ -4,7 +4,6 @@ import com.akshat.project.university.management.system.error.ApiRequestException
 import com.akshat.project.university.management.system.model.Lecturer;
 import com.akshat.project.university.management.system.repository.LecturerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class LecturerService {
-    @Autowired
     private final LecturerRepository lecturerRepository;
 
     public List<Lecturer> getAllLecturers() {
@@ -55,6 +53,7 @@ public class LecturerService {
         lecturer.setAddressId(lecturerDetails.getAddressId());
         lecturer.setDateOfBirth(lecturerDetails.getDateOfBirth());
         lecturer.setProfilePicturePath(lecturerDetails.getProfilePicturePath());
+        lecturer.setProfilePictureId(lecturerDetails.getProfilePictureId());
         lecturer.setDepartmentId(lecturerDetails.getDepartmentId());
         lecturer.setEmployeeId(lecturerDetails.getEmployeeId());
         try {

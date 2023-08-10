@@ -18,65 +18,93 @@ public class FileService {
     private final FileRepository fileRepository;
 
     public File uploadFile(MultipartFile multipartFile) {
-        String contentType = multipartFile.getContentType();
-        String fileName = UUID.randomUUID().toString();
-        System.out.println(fileName);
-        System.out.println(System.getProperty("user.dir") + "\\src\\main\\resources\\uploads\\" + multipartFile.getOriginalFilename());
-        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\uploads\\" + fileName + "." + contentType.split("/")[1];
-        System.out.println(path);
         try {
-            multipartFile.transferTo(new java.io.File(path));
-        } catch (IOException e) {
-            throw new ApiRequestException("Could not transfer file", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        File file = new File();
-        file.setName(fileName);
-        file.setContentType(contentType);
-        file.setPath(path);
-        try {
+            String contentType = multipartFile.getContentType();
+            String fileName = UUID.randomUUID().toString();
+            String directoryPath = System.getProperty("user.dir") + "/uploads";
+            String filePath = directoryPath + "/" + fileName + "." + contentType.split("/")[1];
+            java.io.File directory = new java.io.File(directoryPath);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            multipartFile.transferTo(new java.io.File(filePath));
+
+            File file = new File();
+            file.setName(fileName);
+            file.setContentType(contentType);
+            file.setPath(filePath);
+
             return fileRepository.save(file);
+        } catch (IOException e) {
+            // Log the exception for detailed error analysis
+            e.printStackTrace();
+            throw new ApiRequestException("Could not transfer file", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            // Log the exception for detailed error analysis
+            e.printStackTrace();
             throw new ApiRequestException("Could not upload file", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public File getFileById(Long id) {
-        return fileRepository.findById(id).orElseThrow(
-                () -> new ApiRequestException("File with id: " + id + " does not exist", HttpStatus.NOT_FOUND)
-        );
-    }
-
-    public File getFileByName(String name) {
-        return fileRepository.findByName(name).orElseThrow(
-                () -> new ApiRequestException("File with name: " + name + " does not exist", HttpStatus.NOT_FOUND)
-        );
-    }
-
-    public File deleteFile(Long id) {
-        File file = fileRepository.findById(id).orElseThrow(
-                () -> new ApiRequestException("File with id: " + id + " does not exist", HttpStatus.NOT_FOUND)
-        );
+    public byte[] downloadFile(String name) {
+        File file = fileRepository.findByName(name).orElseThrow(() -> new ApiRequestException("File not found", HttpStatus.NOT_FOUND));
         try {
-            java.io.File fileToDelete = new java.io.File(file.getPath());
-            boolean delete = fileToDelete.delete();
-            if (!delete) {
-                throw new ApiRequestException("Could not delete file with id: " + id, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-            fileRepository.delete(file);
-            return file;
+            java.io.File fileToDownload = new java.io.File(file.getPath());
+            return java.nio.file.Files.readAllBytes(fileToDownload.toPath());
         } catch (Exception e) {
-            throw new ApiRequestException("Could not delete file with id: " + id, HttpStatus.INTERNAL_SERVER_ERROR);
+            // Log the exception for detailed error analysis
+            e.printStackTrace();
+            throw new ApiRequestException("Could not download file", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public java.io.File downloadFile(Long id) {
-        File file = fileRepository.findById(id).orElseThrow(
-                () -> new ApiRequestException("File with id: " + id + " does not exist", HttpStatus.NOT_FOUND)
-        );
-        return new java.io.File(file.getPath());
+    public byte[] downloadFileByPath(String path) {
+        File file = fileRepository.findByPath(path).orElseThrow(() -> new ApiRequestException("File not found", HttpStatus.NOT_FOUND));
+        try {
+            java.io.File fileToDownload = new java.io.File(file.getPath());
+            return java.nio.file.Files.readAllBytes(fileToDownload.toPath());
+        } catch (Exception e) {
+            // Log the exception for detailed error analysis
+            e.printStackTrace();
+            throw new ApiRequestException("Could not download file", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public  byte[] downloadFileById(Long id) {
+        File file = fileRepository.findById(id).orElseThrow(() -> new ApiRequestException("File not found", HttpStatus.NOT_FOUND));
+        try {
+            java.io.File fileToDownload = new java.io.File(file.getPath());
+            return java.nio.file.Files.readAllBytes(fileToDownload.toPath());
+        } catch (Exception e) {
+            // Log the exception for detailed error analysis
+            e.printStackTrace();
+            throw new ApiRequestException("Could not download file", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public List<File> getAllFiles() {
         return fileRepository.findAll();
+    }
+
+    public File getFileById(Long id) {
+        return fileRepository.findById(id).orElseThrow(() -> new ApiRequestException("File not found", HttpStatus.NOT_FOUND));
+    }
+
+    public File deleteFileById(Long id) {
+        File file = fileRepository.findById(id).orElseThrow(() -> new ApiRequestException("File not found", HttpStatus.NOT_FOUND));
+        try {
+            java.io.File fileToDelete = new java.io.File(file.getPath());
+            boolean deleted = fileToDelete.delete();
+            if (!deleted) {
+                throw new ApiRequestException("Could not delete file", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            fileRepository.deleteById(id);
+        } catch (Exception e) {
+            // Log the exception for detailed error analysis
+            e.printStackTrace();
+            throw new ApiRequestException("Could not delete file", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return file;
     }
 }

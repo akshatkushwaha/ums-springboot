@@ -3,7 +3,6 @@ package com.akshat.project.university.management.system.controller;
 import com.akshat.project.university.management.system.model.Subject;
 import com.akshat.project.university.management.system.service.SubjectService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/subject")
 public class SubjectController {
-    @Autowired
     public final SubjectService subjectService;
 
     @GetMapping

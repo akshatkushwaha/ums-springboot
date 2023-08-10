@@ -3,7 +3,6 @@ package com.akshat.project.university.management.system.controller;
 import com.akshat.project.university.management.system.model.Department;
 import com.akshat.project.university.management.system.service.DepartmentsService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/department")
 public class DepartmentController {
-    @Autowired
     private final DepartmentsService departmentsService;
 
     @GetMapping

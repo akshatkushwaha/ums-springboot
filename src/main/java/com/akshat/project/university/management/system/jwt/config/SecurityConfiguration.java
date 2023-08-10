@@ -12,11 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.akshat.project.university.management.system.jwt.user.Permission.*;
-import static com.akshat.project.university.management.system.jwt.user.Role.ADMIN;
-import static com.akshat.project.university.management.system.jwt.user.Role.MANAGER;
-import static org.springframework.http.HttpMethod.*;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
